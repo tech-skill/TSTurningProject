@@ -21,4 +21,15 @@ isEmpty(CATCH_INCLUDE_DIR): {
     message("CATCH_INCLUDE_DIR is not set, assuming Catch2 can be found automatically in your system")
 }
 
-SOURCES +=     main.cpp     tst_apptests.cpp
+PROJECT_SOURCES = \
+    $$PROJECT_DIR/settings.cpp
+
+PROJECT_HEADERS = \
+    $$PROJECT_DIR/setting.h
+
+SOURCES +=     main.cpp     tst_apptests.cpp \
+    test_settings.cpp \
+    $$PROJECT_SOURCES
+
+HEADERS += \
+    $$PROJECT_HEADERS

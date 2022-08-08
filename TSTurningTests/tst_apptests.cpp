@@ -1,6 +1,17 @@
-#include <catch2/catch.hpp>
+#include <catch.hpp>
+#include <trompeloeil.hpp>
 
-TEST_CASE("My first test with Catch2", "[fancy]")
+#include <iostream>
+
+//#include <QSignalSpy>
+
+extern template struct trompeloeil::reporter<trompeloeil::specialized>;
+
+
+TEST_CASE("Application Tests", "[app]")
 {
-    REQUIRE(0 == 0);
+
+    SECTION("Hello World") {
+        REQUIRE(true);
+    }
 }
