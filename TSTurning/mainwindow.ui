@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string/>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/tech-skill-logo.png</normaloff>:/icons/tech-skill-logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="MenuBar">
@@ -20,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -41,6 +45,8 @@
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionEdit_Json"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -64,6 +70,7 @@
    </attribute>
    <addaction name="actionNew"/>
    <addaction name="actionOpen"/>
+   <addaction name="actionEdit_Json"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_as"/>
   </widget>
@@ -196,6 +203,21 @@
   <action name="actionAbout">
    <property name="text">
     <string>About...</string>
+   </property>
+  </action>
+  <action name="actionEdit_Json">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Edit program</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit (JSON) program</string>
+   </property>
+   <property name="statusTip">
+    <string>Edit the (JSON)  program in the text editor</string>
    </property>
   </action>
  </widget>
