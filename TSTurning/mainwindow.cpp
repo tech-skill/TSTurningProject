@@ -84,7 +84,8 @@ void MainWindow::about()
    QMessageBox::about(this, tr("About Application"),
             tr("The <b>Application</b> example demonstrates how to "
                "write modern GUI applications using Qt, with a menu bar, "
-               "toolbars, and a status bar."));
+               "toolbars, and a status bar."
+               "Icons from: https://fluenticons.co"));
 }
 
 void MainWindow::documentWasModified()
@@ -96,7 +97,8 @@ void MainWindow::createActions()
 {
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
     QToolBar *fileToolBar = addToolBar(tr("File"));
-    const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/icons/ic_fluent_form_new_24_filled.png"));
+
+    const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/icons/new.png"));
     QAction *newAct = new QAction(newIcon, tr("&New"), this);
     newAct->setShortcuts(QKeySequence::New);
     newAct->setStatusTip(tr("Create a new file"));
@@ -104,13 +106,21 @@ void MainWindow::createActions()
     fileMenu->addAction(newAct);
     fileToolBar->addAction(newAct);
 
-    const QIcon openIcon = QIcon::fromTheme("document-open", QIcon(":/icons/ic_fluent_open_24_filled.png"));
+    const QIcon openIcon = QIcon::fromTheme("document-open", QIcon(":/icons/open.png"));
     QAction *openAct = new QAction(openIcon, tr("&Open..."), this);
     openAct->setShortcuts(QKeySequence::Open);
     openAct->setStatusTip(tr("Open an existing file"));
     connect(openAct, &QAction::triggered, this, &MainWindow::open);
     fileMenu->addAction(openAct);
     fileToolBar->addAction(openAct);
+
+    const QIcon saveIcon = QIcon::fromTheme("document-save", QIcon(":/icons/save.png"));
+    QAction *saveAct = new QAction(saveIcon, tr("&Save"), this);
+    openAct->setShortcuts(QKeySequence::Save);
+    openAct->setStatusTip(tr("Save the current file"));
+    connect(saveAct, &QAction::triggered, this, &MainWindow::save);
+    fileMenu->addAction(saveAct);
+    fileToolBar->addAction(saveAct);
 
 #ifdef QT_NO_CLIPBOARD
     cutAct->setEnabled(false);
@@ -129,6 +139,7 @@ void MainWindow::readSettings()
 {
     QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
     const QByteArray geometry = settings.value("geometry", QByteArray()).toByteArray();
+    const QByteArray windowState = settings.value("windowstate", QByteArray()).toByteArray();
     if (geometry.isEmpty()) {
         const QRect availableGeometry = screen()->availableGeometry();
         resize(availableGeometry.width() / 3, availableGeometry.height() / 2);
@@ -137,12 +148,16 @@ void MainWindow::readSettings()
     } else {
         restoreGeometry(geometry);
     }
+    if (!windowState.isEmpty()) {
+        restoreState(windowState);
+    }
 }
 
 void MainWindow::writeSettings()
 {
     QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
     settings.setValue("geometry", saveGeometry());
+    settings.setValue("windowstate", saveState());
 }
 
 bool MainWindow::maybeSave()
