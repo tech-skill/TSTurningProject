@@ -1,17 +1,15 @@
 #include <QtWidgets>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "settings.h"
 
 MainWindow::MainWindow(QWidget *parent)
-//    : QMainWindow(parent)
-    : textEdit(new QPlainTextEdit)
+    : QMainWindow(parent)
+    ,textEdit(new QPlainTextEdit)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    createActions();
- //   createStatusBar();
+    connectActions();
 
     readSettings();
 
@@ -93,37 +91,16 @@ void MainWindow::documentWasModified()
     setWindowModified(textEdit->document()->isModified());
 }
 
-void MainWindow::createActions()
+void MainWindow::connectActions()
 {
-    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
-    QToolBar *fileToolBar = addToolBar(tr("File"));
-
-    const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/icons/new.png"));
-    QAction *newAct = new QAction(newIcon, tr("&New"), this);
-    newAct->setShortcuts(QKeySequence::New);
-    newAct->setStatusTip(tr("Create a new file"));
-    connect(newAct, &QAction::triggered, this, &MainWindow::newFile);
-    fileMenu->addAction(newAct);
-    fileToolBar->addAction(newAct);
-
-    const QIcon openIcon = QIcon::fromTheme("document-open", QIcon(":/icons/open.png"));
-    QAction *openAct = new QAction(openIcon, tr("&Open..."), this);
-    openAct->setShortcuts(QKeySequence::Open);
-    openAct->setStatusTip(tr("Open an existing file"));
-    connect(openAct, &QAction::triggered, this, &MainWindow::open);
-    fileMenu->addAction(openAct);
-    fileToolBar->addAction(openAct);
-
-    const QIcon saveIcon = QIcon::fromTheme("document-save", QIcon(":/icons/save.png"));
-    QAction *saveAct = new QAction(saveIcon, tr("&Save"), this);
-    openAct->setShortcuts(QKeySequence::Save);
-    openAct->setStatusTip(tr("Save the current file"));
-    connect(saveAct, &QAction::triggered, this, &MainWindow::save);
-    fileMenu->addAction(saveAct);
-    fileToolBar->addAction(saveAct);
+    connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
+    connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::open);
+    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::save);
+    connect(ui->actionSave_as, &QAction::triggered, this, &MainWindow::saveAs);
+    connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::about);
 
 #ifdef QT_NO_CLIPBOARD
-    cutAct->setEnabled(false);
+    actionCut->setEnabled(false);
     copyAct->setEnabled(false);
     connect(textEdit, &QPlainTextEdit::copyAvailable, cutAct, &QAction::setEnabled);
     connect(textEdit, &QPlainTextEdit::copyAvailable, copyAct, &QAction::setEnabled);

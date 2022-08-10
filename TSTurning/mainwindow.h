@@ -34,7 +34,7 @@ private slots:
 #endif
 
 private:
-    void createActions();
+    void connectActions();
     void createStatusBar();
     void readSettings();
     void writeSettings();
