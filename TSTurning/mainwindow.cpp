@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     connectActions();
 
     readSettings();
@@ -51,15 +52,10 @@ void MainWindow::newFile()
 void MainWindow::open()
 {
     if (maybeSave()) {
-        QString fileName = QFileDialog::getOpenFileName(this,tr("Open a program file"),"~/","*.json");
+        QString fileName = QFileDialog::getOpenFileName(this);
         if (!fileName.isEmpty())
             loadFile(fileName);
     }
-}
-
-void MainWindow::edit()
-{
-    setCentralWidget(textEdit);
 }
 
 bool MainWindow::save()
@@ -73,7 +69,7 @@ bool MainWindow::save()
 
 bool MainWindow::saveAs()
 {
-    QFileDialog dialog(this,tr("Save program file"),"~/","*.json");
+    QFileDialog dialog(this);
     dialog.setWindowModality(Qt::WindowModal);
     dialog.setAcceptMode(QFileDialog::AcceptSave);
     if (dialog.exec() != QDialog::Accepted)
@@ -83,11 +79,11 @@ bool MainWindow::saveAs()
 
 void MainWindow::about()
 {
-   QMessageBox::about(this, tr("About Tech-Skill Turning"),
-            tr("The <b>Tech-Skill Turning</b> application is an attempt "
-               "to fill in the gap of free conversational CNC applications."
-               "<br/><br/>"
-               "<i>Icons from: https://fluenticons.co</i>"));
+   QMessageBox::about(this, tr("About Application"),
+            tr("The <b>Application</b> example demonstrates how to "
+               "write modern GUI applications using Qt, with a menu bar, "
+               "toolbars, and a status bar."
+               "Icons from: https://fluenticons.co"));
 }
 
 void MainWindow::documentWasModified()
@@ -99,7 +95,6 @@ void MainWindow::connectActions()
 {
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::open);
-    connect(ui->actionEdit_Json, &QAction::triggered, this, &MainWindow::edit);
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::save);
     connect(ui->actionSave_as, &QAction::triggered, this, &MainWindow::saveAs);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::about);
