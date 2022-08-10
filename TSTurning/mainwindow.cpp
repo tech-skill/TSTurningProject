@@ -98,6 +98,7 @@ void MainWindow::connectActions()
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::save);
     connect(ui->actionSave_as, &QAction::triggered, this, &MainWindow::saveAs);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::about);
+    connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
 
 #ifdef QT_NO_CLIPBOARD
     actionCut->setEnabled(false);
