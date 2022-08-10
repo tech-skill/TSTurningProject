@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>Close-icon.png</file>
+        <file>ic_fluent_open_24_filled.png</file>
+        <file>ic_fluent_form_new_24_filled.png</file>
+    </qresource>
+</RCC>
