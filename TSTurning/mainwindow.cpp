@@ -1,6 +1,7 @@
 #include <QtWidgets>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "basecycle.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(textEdit->document(), &QTextDocument::contentsChanged,
             this, &MainWindow::documentWasModified);
-
+    BaseCycle cycle1("abc");
+   QString a= cycle1.CycleName;
 #ifdef QT_NO_SESSIONMANAGER
     connect(qApp, &QGuiApplication::commitDataRequest,
             this, &MainWindow::commitData);
